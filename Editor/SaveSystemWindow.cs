@@ -11,9 +11,11 @@ namespace WolverineSoft.SaveSystem.Editor
     {
         SaveManager assignedSaveManager;
 
-
-        private GUIContent ManagerIDContent => new GUIContent("Manager ID", SaveManager.Styles.managerIDTooltip);
-        private GUIContent ManagerSettingsContent => new GUIContent("Settings", SaveManager.Styles.settingsTooltip);
+        private GUIContent ManagerIDContent => 
+            new GUIContent("Manager ID", SaveManager.Styles.managerIDTooltip);
+        
+        private GUIContent ManagerSettingsContent => 
+            new GUIContent("Settings", SaveManager.Styles.settingsTooltip);
 
         private GUIContent SaveFileContent =>
             new GUIContent("Active Save File", SaveSystemSettings.Styles.saveFileTooltip);
@@ -107,6 +109,7 @@ namespace WolverineSoft.SaveSystem.Editor
 
             if (EditorGUI.EndChangeCheck())
             {
+                settings.TryUpdateTempFile();
                 EditorUtility.SetDirty(settings);
             }
         }

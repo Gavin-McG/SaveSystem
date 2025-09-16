@@ -42,7 +42,7 @@ namespace WolverineSoft.SaveSystem
             TryUpdateTempFile();
         }
 
-        void TryUpdateTempFile()
+        public void TryUpdateTempFile()
         {
             if (Application.isEditor && saveFile != null)
             {
