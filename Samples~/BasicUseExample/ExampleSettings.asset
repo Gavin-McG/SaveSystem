@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a30dc72031cd5764e8efa1756b104f26, type: 3}
+  m_Name: ExampleSettings
+  m_EditorClassIdentifier: WolverineSoft.SaveSystem::WolverineSoft.SaveSystem.SaveSystemSettings
+  saveFile: {fileID: 11400000, guid: 60a19723572159f4eb268135057b9623, type: 2}
+  useTemporarySave: 1
+  showDebug: 1

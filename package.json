@@ -16,5 +16,12 @@
   "author": {
     "name": "Gavin McGinness",
     "email": "gavinmcg@umich.edu"
-  }
+  },
+  "samples": [
+    {
+      "displayName": "Example Usage",
+      "description": "Basic example usage of Saving and objects which use save data. RigidBodySaver saves data for individual objects and ObJectManagerSaver saves data for a set of managed objects",
+      "path": "Samples~/BasicUseExample"
+    }
+  ]
 }
