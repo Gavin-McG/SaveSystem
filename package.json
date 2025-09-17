@@ -1,10 +1,10 @@
 {
   "name": "com.wolverinesoft.savesystem",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "displayName": "Save System",
   "description": "This is a Save System created with flexibility and testing in mind.",
   "unity": "6000.2",
-  "unityRelease": "4f1",
+  "unityRelease": "0f1",
   "documentationUrl": "https://www.notion.so/8cc50fcdd92a4274ae45aa39976983c8?v=ae7dcbdaeefc4880bfdcbe39924eae56",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.2.1"
