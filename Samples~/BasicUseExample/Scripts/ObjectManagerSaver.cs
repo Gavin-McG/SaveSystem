@@ -7,11 +7,15 @@ using Random = UnityEngine.Random;
 
 namespace  WolverineSoft.SaveSystem.Samples.BasicUseExample
 {
+    /// <summary>
+    /// Example class for a Manager which manages a set of objects with the save system
+    /// </summary>
     public class ObjectManagerSaver : MonoBehaviour, ISaveData<List<ObjectManagerSaver.InstanceData>>
     {
         [SerializeField] private GameObject prefab;
         private List<GameObject> objects = new List<GameObject>();
 
+        //identifies save Data by "ObjectManager"
         public string Identifier => "ObjectManager";
 
         private void OnEnable()
@@ -48,6 +52,7 @@ namespace  WolverineSoft.SaveSystem.Samples.BasicUseExample
             }
         }
 
+        //data class for individual items
         public class InstanceData
         {
             public Vector3 position;
@@ -57,6 +62,7 @@ namespace  WolverineSoft.SaveSystem.Samples.BasicUseExample
 
         public List<InstanceData> GetSaveData()
         {
+            //get list of all object data
             return objects.Select(x => new InstanceData()
             {
                 position = x.transform.position,
@@ -67,6 +73,7 @@ namespace  WolverineSoft.SaveSystem.Samples.BasicUseExample
 
         public void RestoreToDefault()
         {
+            //default is no objects created
             foreach (var item in objects)
             {
                 Destroy(item);
@@ -76,7 +83,10 @@ namespace  WolverineSoft.SaveSystem.Samples.BasicUseExample
 
         public void RestoreFromSaveData(List<InstanceData> data)
         {
+            //clear current objects
             RestoreToDefault();
+            
+            //restore saved objects
             foreach (var item in data)
             {
                 CreateNewObject(item.position, item.rotation, item.scale);

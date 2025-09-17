@@ -18,20 +18,39 @@ namespace WolverineSoft.SaveSystem
         public string TempFileName => "/" + fileName + "-temp.json";
         public string TempFilePath => Application.persistentDataPath + TempFileName;
 
-        public void ClearSave()
+        public void ClearSave(bool showLogs = true)
         {
-            // Clear non-temp file
-            if (File.Exists(NonTempFilePath))
-            {
-                Debug.Log($"Clearing {NonTempFilePath}");
-                File.Delete(NonTempFilePath);
-            }
+            ClearNonTempSave(showLogs);
+            
+            if (Application.isPlaying)
+                ClearTempSave(showLogs);
+        }
 
-            // Clear temp file
+        public void ClearTempSave(bool showLogs = true)
+        {
             if (File.Exists(TempFilePath))
             {
-                Debug.Log($"Clearing {TempFilePath}");
                 File.Delete(TempFilePath);
+                if (showLogs)
+                    Debug.Log($"Clearing {TempFilePath}");
+            }
+            else if (showLogs)
+            {
+                Debug.Log($"No such file {TempFilePath} to clear");
+            }
+        }
+
+        public void ClearNonTempSave(bool showLogs = true)
+        {
+            if (File.Exists(NonTempFilePath))
+            {
+                File.Delete(NonTempFilePath);
+                if (showLogs) 
+                    Debug.Log($"Clearing {NonTempFilePath}");
+            }
+            else if (showLogs)
+            {
+                Debug.Log($"No such file {NonTempFilePath} to clear");
             }
         }
     }

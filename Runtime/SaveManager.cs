@@ -110,7 +110,8 @@ namespace WolverineSoft.SaveSystem
             var json = JsonConvert.SerializeObject(_data, JsonSettings);
 
             //save to file
-            if (settings.showDebug) Debug.Log("Saving to " + settings.FilePath);
+            if (settings.showLogs) 
+                Debug.Log("Saving to " + settings.FilePath);
             File.WriteAllText(settings.FilePath, json);
 
             return true;
@@ -132,30 +133,53 @@ namespace WolverineSoft.SaveSystem
             //load data to dict if file exists
             try
             {
+                //try to load from file
                 string path = settings.FilePath;
                 if (File.Exists(path))
                 {
-                    string json = File.ReadAllText(path);
-                    _data = JsonConvert.DeserializeObject<Dictionary<string, object>>(json, JsonSettings);
-                    _loaded = true;
-                    return restore ? RestoreData() : true;
+                    return LoadFromPath(path, restore);
+                }
+
+                //try to load from non-temp file as backup
+                string nonTempPath = settings.NonTempFilePath;
+                if (settings.UseTemp && File.Exists(nonTempPath))
+                {
+                    if (settings.showWarnings)
+                        Debug.LogWarning("No temp file found; copying main save to temp save");
+                    
+                    File.Copy(nonTempPath, settings.TempFilePath, true);
+                    
+                    LoadFromPath(nonTempPath, restore);
                 }
 
                 //no save file exists
-                if (settings.showDebug)
+                if (settings.showWarnings)
                     Debug.LogWarning("No data to load: save file does not exist");
-                _data.Clear();
-                if (restore) RestoreData();
+                ClearData(restore);
                 return false;
             }
             catch (Exception e)
             {
                 //error is opening/deserializing file
                 Debug.LogError($"Cannot load save: {e}");
-                _data.Clear();
-                if (restore) RestoreData();
+                ClearData(restore);
                 return false;
             }
+        }
+
+        private bool LoadFromPath(string path, bool restore = true)
+        {
+            string json = File.ReadAllText(path);
+            _data = JsonConvert.DeserializeObject<Dictionary<string, object>>(json, JsonSettings);
+            _loaded = true;
+            return restore ? RestoreData() : true;
+        }
+
+        private void ClearData(bool restore = true)
+        {
+            _data.Clear();
+            _loaded = false;
+            if (restore) RestoreToDefault();
         }
 
 
@@ -165,13 +189,6 @@ namespace WolverineSoft.SaveSystem
         /// </summary>
         private bool RestoreData()
         {
-            //load data if necessary
-            if (!_loaded)
-            {
-                Debug.LogError("Cannot restore save: No save data loaded.");
-                return false;
-            }
-
             //restore each object
             foreach (var saveObject in SaveObjects)
             {
@@ -188,6 +205,16 @@ namespace WolverineSoft.SaveSystem
             return true;
         }
 
+        private bool RestoreToDefault()
+        {
+            foreach (var saveObject in SaveObjects)
+            {
+                saveObject.RestoreToDefault();
+            }
+            
+            return true;
+        }
+
         /// <summary>
         /// Get the data for a particular identifier. Returns false if no data exists or is of incorrect type
         /// </summary>
@@ -199,10 +226,8 @@ namespace WolverineSoft.SaveSystem
             //check that key exists
             if (!_data.ContainsValue(identifier))
             {
-                if (settings.showDebug)
-                {
+                if (settings.showWarnings)
                     Debug.LogWarning($"No save data found for identifier {identifier}");
-                }
 
                 data = default(T);
                 return false;

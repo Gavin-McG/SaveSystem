@@ -23,8 +23,11 @@ namespace WolverineSoft.SaveSystem.Editor
         private GUIContent UseTempSaveContent =>
             new GUIContent("Use Temporary Save", SaveSystemSettings.Styles.useTemporarySaveTooltip);
 
-        private GUIContent ShowDebugContent =>
-            new GUIContent("Show Debug Output", SaveSystemSettings.Styles.showDebugTooltip);
+        private GUIContent ShowLogsContent =>
+            new GUIContent("Show Log Output", SaveSystemSettings.Styles.showLogsTooltip);
+        
+        private GUIContent showWarningContent =>
+            new GUIContent("Show Warning Output", SaveSystemSettings.Styles.showLogsTooltip);
 
 
         [MenuItem("Window/WolverineSoft/Save System Settings")]
@@ -104,8 +107,10 @@ namespace WolverineSoft.SaveSystem.Editor
                 EditorGUILayout.ObjectField(SaveFileContent, settings.saveFile, typeof(SaveFile), false);
             settings.useTemporarySave =
                 EditorGUILayout.Toggle(UseTempSaveContent, settings.useTemporarySave);
-            settings.showDebug =
-                EditorGUILayout.Toggle(ShowDebugContent, settings.showDebug);
+            settings.showLogs =
+                EditorGUILayout.Toggle(ShowLogsContent, settings.showLogs);
+            settings.showWarnings =
+                EditorGUILayout.Toggle(showWarningContent, settings.showWarnings);
 
             if (EditorGUI.EndChangeCheck())
             {

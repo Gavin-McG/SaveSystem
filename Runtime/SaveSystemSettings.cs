@@ -18,21 +18,35 @@ namespace WolverineSoft.SaveSystem
             public const string useTemporarySaveTooltip =
                 "Create a temporary copy of the current save file that will persist until end of session. Useful for testing.";
 
-            public const string showDebugTooltip =
-                "Show Warnings and Logs from Save System, Errors will be shown regardless";
+            public const string showLogsTooltip =
+                "Show Logs from Save System, Errors will be shown regardless";
+            
+            public const string showWarningsTooltip =
+                "Show Warnings from Save System, Errors will be shown regardless";
         }
 
-        [Header("Save File")] [Tooltip(Styles.saveFileTooltip)] [SerializeField]
+        [Header("Save File")] 
+        [Tooltip(Styles.saveFileTooltip)] [SerializeField]
         public SaveFile saveFile;
 
         [Tooltip(Styles.useTemporarySaveTooltip)] [SerializeField]
         public bool useTemporarySave = false;
 
-        [Header("Debug Settings")] [Tooltip(Styles.showDebugTooltip)] [SerializeField]
-        public bool showDebug = true;
+        [Header("Debug Settings")] 
+        [Tooltip(Styles.showLogsTooltip)] [SerializeField]
+        public bool showLogs = false;
+        
+        [Tooltip(Styles.showLogsTooltip)] [SerializeField]
+        public bool showWarnings = true;
 
         //Property for whether temporary file should be used
-        private bool UseTemp => useTemporarySave && Application.isEditor;
+        public bool UseTemp => useTemporarySave && Application.isEditor && Application.isPlaying;
+        
+        //Properties for file paths
+        public string NonTempFileName => saveFile?.NonTempFileName;
+        public string NonTempFilePath => saveFile?.NonTempFilePath;
+        public string TempFileName => saveFile?.TempFileName;
+        public string TempFilePath => saveFile?.TempFilePath;
 
         //Full current file path
         public string FilePath => UseTemp ? saveFile?.TempFilePath : saveFile?.NonTempFilePath;
@@ -66,7 +80,7 @@ namespace WolverineSoft.SaveSystem
                 if (File.Exists(saveFile.NonTempFilePath))
                 {
                     File.Copy(saveFile.NonTempFilePath, saveFile.TempFilePath, overwrite: true);
-                    if (showDebug)
+                    if (showLogs)
                         Debug.Log($"[SaveSystemSettings] Copied {saveFile.NonTempFileName} → {saveFile.TempFileName}");
                 }
             }
@@ -76,7 +90,7 @@ namespace WolverineSoft.SaveSystem
                 if (File.Exists(saveFile.TempFilePath))
                 {
                     File.Delete(saveFile.TempFilePath);
-                    if (showDebug) Debug.Log($"[SaveSystemSettings] Deleted {saveFile.TempFileName}");
+                    if (showLogs) Debug.Log($"[SaveSystemSettings] Deleted {saveFile.TempFileName}");
                 }
             }
         }

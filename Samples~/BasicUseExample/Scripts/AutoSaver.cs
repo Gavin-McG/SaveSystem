@@ -13,7 +13,8 @@ namespace WolverineSoft.SaveSystem.Samples.BasicUseExample
         
         private void OnEnable()
         {
-            autoSaveCoRoutine = StartCoroutine(AutoSaveRoutine());
+            if (autoSave)
+                autoSaveCoRoutine = StartCoroutine(AutoSaveRoutine());
         }
 
         private void OnValidate()

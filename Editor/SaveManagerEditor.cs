@@ -31,10 +31,14 @@ namespace WolverineSoft.SaveSystem.Editor
             if (saveFile)
             {
                 SaveButton(manager);
+                
+                //only show load buttons while Scene is playing (Prevents breaking scenes by loading)
+                GUI.enabled = Application.isPlaying;
                 LoadButton(manager);
                 LoadNoRestoreButton(manager);
+                GUI.enabled = true;
 
-                SaveFileEditor.ClearButton(saveFile);
+                SaveFileEditor.ClearButtons(saveFile);
             }
             else
             {
@@ -47,7 +51,7 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             if (GUILayout.Button("Save Data"))
             {
-                if (manager.SaveData() && manager.settings.showDebug)
+                if (manager.SaveData() && manager.settings.showLogs)
                     Debug.Log("Data saved.");
             }
         }
@@ -56,7 +60,7 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             if (GUILayout.Button("Load Data"))
             {
-                if (manager.LoadData() && manager.settings.showDebug)
+                if (manager.LoadData() && manager.settings.showLogs)
                     Debug.Log("Data Loaded and Restored to objects.");
             }
         }
@@ -65,7 +69,7 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             if (GUILayout.Button("Load Data (No Restore)"))
             {
-                if (manager.LoadData(restore: false) && manager.settings.showDebug)
+                if (manager.LoadData(restore: false) && manager.settings.showLogs)
                     Debug.Log("Data loaded.");
             }
         }

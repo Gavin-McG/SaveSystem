@@ -8,6 +8,12 @@ namespace WolverineSoft.SaveSystem.Editor
     [CustomEditor(typeof(SaveFile)), CanEditMultipleObjects]
     public class SaveFileEditor : Editor
     {
+        private static GUIContent ClearAllContent => 
+            new GUIContent("Clear All Save Data", "Clears all file data, Including Temp save data. Will not alter the currently playing scene or loaded data.");
+
+        private static GUIContent ClearTempContent =>
+            new GUIContent("Clear Temp Save Data", "Clears the temp save data. Will not alter the currently playing scene or loaded data.");
+        
         public override void OnInspectorGUI()
         {
             // Draw the default inspector first
@@ -23,21 +29,41 @@ namespace WolverineSoft.SaveSystem.Editor
             var saveFiles = targets.OfType<SaveFile>();
         
             // Clear Button
-            if (GUILayout.Button("Clear Save Data"))
+            if (GUILayout.Button(ClearAllContent))
             {
                 foreach (var saveFile in saveFiles)
                 {
                     saveFile.ClearSave();
                 }
             }
+            
+            GUI.enabled = Application.isPlaying;
+            if (GUILayout.Button(ClearTempContent))
+            {
+                foreach (var saveFile in saveFiles)
+                {
+                    saveFile.ClearTempSave();
+                }
+            }
+            GUI.enabled = true;
         }
 
-        public static void ClearButton(SaveFile saveFile)
+        public static void ClearButtons(SaveFile saveFile, bool showLogs=true)
         {
-            if (GUILayout.Button("Clear Save Data"))
+            GUILayout.Space(10);
+            EditorGUILayout.LabelField("Save File Tools");
+            
+            if (GUILayout.Button(ClearAllContent))
             {
-                saveFile.ClearSave();
+                saveFile.ClearSave(showLogs);
             }
+            
+            GUI.enabled = Application.isPlaying;
+            if (GUILayout.Button(ClearTempContent))
+            {
+                saveFile.ClearTempSave(showLogs);
+            }
+            GUI.enabled = true;
         }
     }
 }
