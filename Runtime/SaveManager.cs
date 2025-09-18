@@ -13,7 +13,7 @@ namespace WolverineSoft.SaveSystem
     /// Component for managing the save data and communicating with ISaveData Objects.
     /// Requires a reference to Save Settings
     /// </summary>
-    public class SaveManager : Singleton<SaveManager>
+    public sealed class SaveManager : Singleton<SaveManager>
     {
         public static class Styles
         {
@@ -34,7 +34,7 @@ namespace WolverineSoft.SaveSystem
         private Dictionary<string, object> _data = new(); //dictionary corresponding object identifiers to their data
 
         // Contract resolver for NewtonSoft serialization. Used to target only fields and exclude properties
-        public class FieldsOnlyContractResolver : DefaultContractResolver
+        private class FieldsOnlyContractResolver : DefaultContractResolver
         {
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {

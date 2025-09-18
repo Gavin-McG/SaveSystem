@@ -6,7 +6,7 @@ namespace WolverineSoft.SaveSystem.Editor
     using UnityEditor;
     
     [CustomEditor(typeof(SaveFile)), CanEditMultipleObjects]
-    public class SaveFileEditor : Editor
+    internal sealed class SaveFileEditor : Editor
     {
         private static GUIContent ClearAllContent => 
             new GUIContent("Clear All Save Data", "Clears all file data, Including Temp save data. Will not alter the currently playing scene or loaded data.");
@@ -26,9 +26,9 @@ namespace WolverineSoft.SaveSystem.Editor
             GUILayout.Space(10);
             EditorGUILayout.LabelField("Tools", EditorStyles.boldLabel);
         
-            var saveFiles = targets.OfType<SaveFile>();
+            var saveFiles = targets.OfType<SaveFile>().ToList();
         
-            // Clear Button
+            // Clear all Button
             if (GUILayout.Button(ClearAllContent))
             {
                 foreach (var saveFile in saveFiles)
@@ -37,6 +37,7 @@ namespace WolverineSoft.SaveSystem.Editor
                 }
             }
             
+            // Clear temp button
             GUI.enabled = Application.isPlaying;
             if (GUILayout.Button(ClearTempContent))
             {
@@ -53,11 +54,13 @@ namespace WolverineSoft.SaveSystem.Editor
             GUILayout.Space(10);
             EditorGUILayout.LabelField("Save File Tools");
             
+            // Clear all Button
             if (GUILayout.Button(ClearAllContent))
             {
                 saveFile.ClearSave(showLogs);
             }
             
+            //  temp button
             GUI.enabled = Application.isPlaying;
             if (GUILayout.Button(ClearTempContent))
             {

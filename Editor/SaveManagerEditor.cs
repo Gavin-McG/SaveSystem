@@ -5,7 +5,7 @@ namespace WolverineSoft.SaveSystem.Editor
     using UnityEditor;
 
     [CustomEditor(typeof(SaveManager))]
-    public class SaveManagerEditor : Editor
+    internal sealed class SaveManagerEditor : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -47,7 +47,7 @@ namespace WolverineSoft.SaveSystem.Editor
 
         }
 
-        public static void SaveButton(SaveManager manager)
+        private static void SaveButton(SaveManager manager)
         {
             if (GUILayout.Button("Save Data"))
             {
@@ -56,7 +56,7 @@ namespace WolverineSoft.SaveSystem.Editor
             }
         }
 
-        public static void LoadButton(SaveManager manager)
+        private static void LoadButton(SaveManager manager)
         {
             if (GUILayout.Button("Load Data"))
             {
@@ -65,7 +65,7 @@ namespace WolverineSoft.SaveSystem.Editor
             }
         }
 
-        public static void LoadNoRestoreButton(SaveManager manager)
+        private static void LoadNoRestoreButton(SaveManager manager)
         {
             if (GUILayout.Button("Load Data (No Restore)"))
             {

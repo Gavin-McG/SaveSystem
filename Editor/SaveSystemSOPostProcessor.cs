@@ -7,7 +7,7 @@ namespace WolverineSoft.SaveSystem.Editor
     /// Post-processor for SO assets which is used to assign the proper icons
     /// </summary>
     [InitializeOnLoad]
-    public static class SaveSystemSOPostProcessor
+    internal static class SaveSystemSOPostProcessor
     {
         private static Texture2D saveFileIcon => Resources.Load<Texture2D>("SaveFileIcon");
         private static Texture2D saveSystemSettingIcon => Resources.Load<Texture2D>("SaveSystemSettingsIcon");

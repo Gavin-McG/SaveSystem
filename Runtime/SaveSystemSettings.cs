@@ -8,7 +8,7 @@ namespace WolverineSoft.SaveSystem
     /// ScriptableObject for storing all settings related to save system
     /// </summary>
     [CreateAssetMenu(fileName = "SaveSystemSettings", menuName = "Save System/Settings")]
-    public class SaveSystemSettings : ScriptableObject
+    public sealed class SaveSystemSettings : ScriptableObject
     {
         public static class Styles
         {

@@ -7,7 +7,7 @@ namespace WolverineSoft.SaveSystem.Editor
     /// <summary>
     /// Editor Window for easy access to Save Settings and Tools without searching assets or components
     /// </summary>
-    public class SaveSystemWindow : EditorWindow
+    internal sealed class SaveSystemWindow : EditorWindow
     {
         SaveManager assignedSaveManager;
 
