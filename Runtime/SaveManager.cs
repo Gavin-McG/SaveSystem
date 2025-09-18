@@ -187,7 +187,7 @@ namespace WolverineSoft.SaveSystem
         /// Uses data from previous load to instruct all ISavaData Objects in the scene to restore their state.
         /// Returns true if no error was encountered while restoring
         /// </summary>
-        private bool RestoreData()
+        public bool RestoreData()
         {
             //restore each object
             foreach (var saveObject in SaveObjects)

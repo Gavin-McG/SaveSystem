@@ -7,6 +7,21 @@ namespace WolverineSoft.SaveSystem.Editor
     [CustomEditor(typeof(SaveManager))]
     internal sealed class SaveManagerEditor : Editor
     {
+        private static class Styles
+        {
+            public static GUIContent SaveButtonContent => 
+                new GUIContent("Save Data", "Save current data of objects to file.");
+        
+            public static GUIContent LoadButtonContent =>
+                new GUIContent("Load Data", "Load saved data into SaveManager.");
+        
+            public static GUIContent RestoreButtonContent =>
+                new GUIContent("Restore Data", "Restore loaded data to objects.");
+        
+            public static GUIContent LoadAndRestoreButtonContent =>
+                new GUIContent("Load And Restore Data", "Load saved data into SaveManager and restore to objects.");
+        }
+        
         public override void OnInspectorGUI()
         {
             // Draw the default inspector first
@@ -26,7 +41,8 @@ namespace WolverineSoft.SaveSystem.Editor
 
         public static void ShowTools(SaveManager manager)
         {
-            SaveFile saveFile = manager?.settings?.saveFile;
+            SaveSystemSettings settings = manager.settings;
+            SaveFile saveFile = settings?.saveFile;
 
             if (saveFile)
             {
@@ -35,10 +51,11 @@ namespace WolverineSoft.SaveSystem.Editor
                 //only show load buttons while Scene is playing (Prevents breaking scenes by loading)
                 GUI.enabled = Application.isPlaying;
                 LoadButton(manager);
-                LoadNoRestoreButton(manager);
+                RestoreButton(manager);
+                LoadAndRestoreButton(manager);
                 GUI.enabled = true;
 
-                SaveFileEditor.ClearButtons(saveFile);
+                SaveFileEditor.ClearButtons(saveFile, !settings.UseTemp, settings.showLogs);
             }
             else
             {
@@ -49,7 +66,7 @@ namespace WolverineSoft.SaveSystem.Editor
 
         private static void SaveButton(SaveManager manager)
         {
-            if (GUILayout.Button("Save Data"))
+            if (GUILayout.Button(Styles.SaveButtonContent))
             {
                 if (manager.SaveData() && manager.settings.showLogs)
                     Debug.Log("Data saved.");
@@ -58,19 +75,28 @@ namespace WolverineSoft.SaveSystem.Editor
 
         private static void LoadButton(SaveManager manager)
         {
-            if (GUILayout.Button("Load Data"))
+            if (GUILayout.Button(Styles.LoadButtonContent))
             {
-                if (manager.LoadData() && manager.settings.showLogs)
-                    Debug.Log("Data Loaded and Restored to objects.");
+                if (manager.LoadData(restore: false) && manager.settings.showLogs)
+                    Debug.Log("Data Loaded.");
             }
         }
 
-        private static void LoadNoRestoreButton(SaveManager manager)
+        private static void RestoreButton(SaveManager manager)
         {
-            if (GUILayout.Button("Load Data (No Restore)"))
+            if (GUILayout.Button(Styles.RestoreButtonContent))
+            {
+                if (manager.RestoreData() && manager.settings.showLogs)
+                    Debug.Log("Data Restored.");
+            }
+        }
+
+        private static void LoadAndRestoreButton(SaveManager manager)
+        {
+            if (GUILayout.Button(Styles.LoadAndRestoreButtonContent))
             {
                 if (manager.LoadData(restore: false) && manager.settings.showLogs)
-                    Debug.Log("Data loaded.");
+                    Debug.Log("Data loaded and restored.");
             }
         }
     }

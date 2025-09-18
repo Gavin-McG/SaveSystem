@@ -27,7 +27,7 @@ namespace WolverineSoft.SaveSystem.Editor
             new GUIContent("Show Log Output", SaveSystemSettings.Styles.showLogsTooltip);
         
         private GUIContent showWarningContent =>
-            new GUIContent("Show Warning Output", SaveSystemSettings.Styles.showLogsTooltip);
+            new GUIContent("Show Warning Output", SaveSystemSettings.Styles.showWarningsTooltip);
 
 
         [MenuItem("Window/WolverineSoft/Save System Settings")]
