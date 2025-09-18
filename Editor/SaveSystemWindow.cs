@@ -9,7 +9,8 @@ namespace WolverineSoft.SaveSystem.Editor
     /// </summary>
     internal sealed class SaveSystemWindow : EditorWindow
     {
-        SaveManager assignedSaveManager;
+        private SaveManager assignedSaveManager;
+        private Vector2 scrollPosition;
 
         private GUIContent ManagerIDContent => 
             new GUIContent("Manager ID", SaveManager.Styles.managerIDTooltip);
@@ -39,6 +40,8 @@ namespace WolverineSoft.SaveSystem.Editor
 
         private void OnGUI()
         {
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+            
             //manual assignment
             assignedSaveManager = (SaveManager)EditorGUILayout.ObjectField("Override Manager", assignedSaveManager,
                 typeof(SaveManager), true);
@@ -54,6 +57,8 @@ namespace WolverineSoft.SaveSystem.Editor
             {
                 ShowAssignableManager();
             }
+            
+            EditorGUILayout.EndScrollView();
         }
 
         private void ShowManagerOptions(SaveManager manager)
