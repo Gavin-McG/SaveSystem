@@ -31,7 +31,7 @@ namespace WolverineSoft.SaveSystem.Editor
             new GUIContent("Show Warning Output", SaveSystemSettings.Styles.showWarningsTooltip);
 
 
-        [MenuItem("Window/WolverineSoft/Save System Settings")]
+        [MenuItem("Window/WolverineSoft/Save System")]
         public static void ShowWindow()
         {
             var window = GetWindow<SaveSystemWindow>("Save System");
