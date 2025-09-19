@@ -43,13 +43,13 @@ namespace WolverineSoft.SaveSystem
         public bool UseTemp => useTemporarySave && Application.isEditor && Application.isPlaying;
         
         //Properties for file paths
-        public string NonTempFileName => saveFile?.NonTempFileName;
-        public string NonTempFilePath => saveFile?.NonTempFilePath;
-        public string TempFileName => saveFile?.TempFileName;
-        public string TempFilePath => saveFile?.TempFilePath;
+        internal string NonTempFileName => saveFile?.NonTempFileName;
+        internal string NonTempFilePath => saveFile?.NonTempFilePath;
+        internal string TempFileName => saveFile?.TempFileName;
+        internal string TempFilePath => saveFile?.TempFilePath;
 
         //Full current file path
-        public string FilePath => UseTemp ? saveFile?.TempFilePath : saveFile?.NonTempFilePath;
+        internal string FilePath => UseTemp ? saveFile?.TempFilePath : saveFile?.NonTempFilePath;
 
         private void OnValidate()
         {

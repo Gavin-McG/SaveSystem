@@ -175,7 +175,7 @@ namespace WolverineSoft.SaveSystem
             return restore ? RestoreData() : true;
         }
 
-        private void ClearData(bool restore = true)
+        public void ClearData(bool restore = true)
         {
             _data.Clear();
             _loaded = false;
@@ -205,7 +205,7 @@ namespace WolverineSoft.SaveSystem
             return true;
         }
 
-        private bool RestoreToDefault()
+        public bool RestoreToDefault()
         {
             foreach (var saveObject in SaveObjects)
             {

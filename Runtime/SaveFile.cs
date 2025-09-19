@@ -13,10 +13,10 @@ namespace WolverineSoft.SaveSystem
         [SerializeField] public string fileName;
 
         //Properties for file paths
-        public string NonTempFileName => "/" + fileName + ".json";
-        public string NonTempFilePath => Application.persistentDataPath + NonTempFileName;
-        public string TempFileName => "/" + fileName + "-temp.json";
-        public string TempFilePath => Application.persistentDataPath + TempFileName;
+        internal string NonTempFileName => "/" + fileName + ".json";
+        internal string NonTempFilePath => Application.persistentDataPath + NonTempFileName;
+        internal string TempFileName => "/" + fileName + "-temp.json";
+        internal string TempFilePath => Application.persistentDataPath + TempFileName;
 
         public void ClearSave(bool showLogs = true)
         {
