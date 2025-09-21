@@ -7,7 +7,7 @@ namespace WolverineSoft.SaveSystem.Samples.BasicUseExample
     /// <summary>
     /// Example class for saving an object with a RigidBody
     /// </summary>
-    public class SaveTester : MonoBehaviour, ISaveData<SaveTester.SaveData>
+    public class RigidBodySaver : MonoBehaviour, ISaveData<RigidBodySaver.SaveData>
     {
         [SerializeField] private Rigidbody rb;
         [SerializeField] private string identifier;
@@ -16,7 +16,7 @@ namespace WolverineSoft.SaveSystem.Samples.BasicUseExample
 
         //identifies save Data by individual assigned identifier
         public string Identifier => identifier;
-
+        
         public class SaveData
         {
             public Vector3 Position;
@@ -46,7 +46,8 @@ namespace WolverineSoft.SaveSystem.Samples.BasicUseExample
         public void RestoreToDefault()
         {
             //restore default data
-            RestoreFromSaveData(defaultSave);
+            if (defaultSave != null)
+                RestoreFromSaveData(defaultSave);
         }
 
         public void RestoreFromSaveData(SaveData data)

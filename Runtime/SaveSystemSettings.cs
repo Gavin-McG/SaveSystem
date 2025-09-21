@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using System.IO;
 
 namespace WolverineSoft.SaveSystem
 {
@@ -76,20 +75,18 @@ namespace WolverineSoft.SaveSystem
         {
             if (useTemporarySave)
             {
-                // If NonTemp exists, copy it to Temp
-                if (File.Exists(saveFile.NonTempFilePath))
+                if (SaveSystemIO.Exists(saveFile.NonTempFilePath))
                 {
-                    File.Copy(saveFile.NonTempFilePath, saveFile.TempFilePath, overwrite: true);
+                    SaveSystemIO.Copy(saveFile.NonTempFilePath, saveFile.TempFilePath, overwrite: true);
                     if (showLogs)
                         Debug.Log($"[SaveSystemSettings] Copied {saveFile.NonTempFileName} → {saveFile.TempFileName}");
                 }
             }
             else
             {
-                // Delete temp file if it exists
-                if (File.Exists(saveFile.TempFilePath))
+                if (SaveSystemIO.Exists(saveFile.TempFilePath))
                 {
-                    File.Delete(saveFile.TempFilePath);
+                    SaveSystemIO.Delete(saveFile.TempFilePath);
                     if (showLogs) Debug.Log($"[SaveSystemSettings] Deleted {saveFile.TempFileName}");
                 }
             }

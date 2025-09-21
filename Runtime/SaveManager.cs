@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -110,9 +109,10 @@ namespace WolverineSoft.SaveSystem
             var json = JsonConvert.SerializeObject(_data, JsonSettings);
 
             //save to file
+            SaveSystemIO.WriteAllText(settings.FilePath, json);
+            
             if (settings.showLogs) 
-                Debug.Log("Saving to " + settings.FilePath);
-            File.WriteAllText(settings.FilePath, json);
+                Debug.Log("Save Data Saved to " + settings.FilePath);
 
             return true;
         }
@@ -135,19 +135,19 @@ namespace WolverineSoft.SaveSystem
             {
                 //try to load from file
                 string path = settings.FilePath;
-                if (File.Exists(path))
+                if (SaveSystemIO.Exists(path))
                 {
                     return LoadFromPath(path, restore);
                 }
 
                 //try to load from non-temp file as backup
                 string nonTempPath = settings.NonTempFilePath;
-                if (settings.UseTemp && File.Exists(nonTempPath))
+                if (settings.UseTemp && SaveSystemIO.Exists(nonTempPath))
                 {
                     if (settings.showWarnings)
                         Debug.LogWarning("No temp file found; copying main save to temp save");
                     
-                    File.Copy(nonTempPath, settings.TempFilePath, true);
+                    SaveSystemIO.Copy(nonTempPath, settings.TempFilePath, true);
                     
                     LoadFromPath(nonTempPath, restore);
                 }
@@ -169,9 +169,13 @@ namespace WolverineSoft.SaveSystem
 
         private bool LoadFromPath(string path, bool restore = true)
         {
-            string json = File.ReadAllText(path);
+            string json = SaveSystemIO.ReadAllText(path);
             _data = JsonConvert.DeserializeObject<Dictionary<string, object>>(json, JsonSettings);
             _loaded = true;
+            
+            if (settings.showLogs)
+                Debug.Log($"Save Data Loaded from {path}");
+            
             return restore ? RestoreData() : true;
         }
 
@@ -201,6 +205,9 @@ namespace WolverineSoft.SaveSystem
                     saveObject.RestoreToDefault();
                 }
             }
+            
+            if (settings.showLogs)
+                Debug.Log($"Save Data Restored");
 
             return true;
         }

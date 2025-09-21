@@ -68,8 +68,7 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             if (GUILayout.Button(Styles.SaveButtonContent))
             {
-                if (manager.SaveData() && manager.settings.showLogs)
-                    Debug.Log("Data saved.");
+                manager.SaveData();
             }
         }
 
@@ -77,8 +76,7 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             if (GUILayout.Button(Styles.LoadButtonContent))
             {
-                if (manager.LoadData(restore: false) && manager.settings.showLogs)
-                    Debug.Log("Data Loaded.");
+                manager.LoadData(restore: false);
             }
         }
 
@@ -86,8 +84,7 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             if (GUILayout.Button(Styles.RestoreButtonContent))
             {
-                if (manager.RestoreData() && manager.settings.showLogs)
-                    Debug.Log("Data Restored.");
+                manager.RestoreData();
             }
         }
 
@@ -95,8 +92,7 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             if (GUILayout.Button(Styles.LoadAndRestoreButtonContent))
             {
-                if (manager.LoadData(restore: false) && manager.settings.showLogs)
-                    Debug.Log("Data loaded and restored.");
+                manager.LoadData(restore: false);
             }
         }
     }

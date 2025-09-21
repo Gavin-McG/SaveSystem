@@ -6,6 +6,7 @@ namespace WolverineSoft.SaveSystem.Samples.BasicUseExample
 {
     public class AutoSaver : MonoBehaviour
     {
+        [SerializeField] private bool loadOnStart = true;
         [SerializeField] private bool autoSave = true;
         [SerializeField, Min(0.2f)] private float saveDelay = 5f;
 
@@ -13,6 +14,12 @@ namespace WolverineSoft.SaveSystem.Samples.BasicUseExample
         
         private void OnEnable()
         {
+            if (loadOnStart)
+            {
+                SaveManager.Instance.LoadData(restore: true);
+            }
+                
+            
             if (autoSave)
                 autoSaveCoRoutine = StartCoroutine(AutoSaveRoutine());
         }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ExampleSettings
   m_EditorClassIdentifier: WolverineSoft.SaveSystem::WolverineSoft.SaveSystem.SaveSystemSettings
   saveFile: {fileID: 11400000, guid: 60a19723572159f4eb268135057b9623, type: 2}
-  useTemporarySave: 1
-  showLogs: 0
+  useTemporarySave: 0
+  showLogs: 1
   showWarnings: 1

@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1fd54d4472a38f4a9de711622f8a81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WolverineSoft.SaveSystem.Samples.BasicUseExample.AutoSaver
-  autoSave: 0
+  autoSave: 1
   saveDelay: 5
 --- !u!1 &37573844
 GameObject:
