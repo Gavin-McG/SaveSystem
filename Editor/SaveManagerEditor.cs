@@ -92,7 +92,7 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             if (GUILayout.Button(Styles.LoadAndRestoreButtonContent))
             {
-                manager.LoadData(restore: false);
+                manager.LoadData(restore: true);
             }
         }
     }
