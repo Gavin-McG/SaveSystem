@@ -16,6 +16,9 @@ namespace WolverineSoft.SaveSystem
         internal string TempFileName => "/" + fileName + "-temp.json";
         internal string TempFilePath => SaveSystemIO.BasePath + TempFileName;
 
+        /// <summary>
+        /// Clears the Contents of a Save file, including temp save if applicable
+        /// </summary>
         public void ClearSave(bool showLogs = true)
         {
             ClearNonTempSave(showLogs);
@@ -23,6 +26,9 @@ namespace WolverineSoft.SaveSystem
                 ClearTempSave(showLogs);
         }
 
+        /// <summary>
+        /// Clears the Contents of a Save file's temp data
+        /// </summary>
         public void ClearTempSave(bool showLogs = true)
         {
             if (SaveSystemIO.Exists(TempFilePath))
@@ -33,6 +39,9 @@ namespace WolverineSoft.SaveSystem
             else if (showLogs) Debug.Log($"No such file {TempFilePath} to clear");
         }
 
+        /// <summary>
+        /// Clears the Contents of a Save file's persistent data
+        /// </summary>
         public void ClearNonTempSave(bool showLogs = true)
         {
             if (SaveSystemIO.Exists(NonTempFilePath))

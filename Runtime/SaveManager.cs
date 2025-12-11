@@ -64,7 +64,7 @@ namespace WolverineSoft.SaveSystem
 
         // returns all the ISaveData Components within the scene
         private IEnumerable<ISaveData> SaveObjects =>
-            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<ISaveData>()
+            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
                 .OfType<ISaveData>()
                 .Where(s => s.ManagerId == managerID);
 
@@ -252,6 +252,30 @@ namespace WolverineSoft.SaveSystem
                            $"Attempted to get {nameof(T)}, was {dataObject.GetType().Name}");
             data = default(T);
             return false;
+        }
+
+        /// <summary>
+        /// Clears the Contents of the assigned Save file, including temp save if applicable
+        /// </summary>
+        public void ClearSave(bool showLogs = true)
+        {
+            settings.saveFile.ClearSave(showLogs);
+        }
+        
+        /// <summary>
+        /// Clears the Contents of the assigned Save file's temp data
+        /// </summary>
+        public void ClearTempSave(bool showLogs = true)
+        {
+            settings.saveFile.ClearTempSave(showLogs);
+        }
+
+        /// <summary>
+        /// Clears the Contents of the assigned Save file's persistent data
+        /// </summary>
+        public void ClearNonTempSave(bool showLogs = true)
+        {
+            settings.saveFile.ClearNonTempSave(showLogs);
         }
     }
 }

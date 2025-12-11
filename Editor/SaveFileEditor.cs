@@ -15,39 +15,40 @@ namespace WolverineSoft.SaveSystem.Editor
 
             public static GUIContent ClearTempContent =>
                 new GUIContent("Clear Temp Save Data", "Clears the temp save data. Will not alter the currently playing scene or loaded data.");
+
+            public static GUIContent OpenFolderContent =>
+                new GUIContent("Open Save Folder", "Opens the save system base directory in Explorer/Finder.");
         }
         
         public override void OnInspectorGUI()
         {
-            // Draw the default inspector first
+            // Draw default inspector
             base.OnInspectorGUI();
 
-            //
-            // Extra Editor Tools
-            //
-        
             GUILayout.Space(10);
             EditorGUILayout.LabelField("Tools", EditorStyles.boldLabel);
-        
+
             var saveFiles = targets.OfType<SaveFile>().ToList();
-        
-            // Clear all Button
+
+            // Open folder button
+            if (GUILayout.Button(Styles.OpenFolderContent))
+            {
+                EditorUtility.RevealInFinder(SaveSystemIO.BasePath);
+            }
+
+            // Clear all
             if (GUILayout.Button(Styles.ClearAllContent))
             {
                 foreach (var saveFile in saveFiles)
-                {
                     saveFile.ClearSave();
-                }
             }
-            
-            // Clear temp button
+
+            // Clear temp
             GUI.enabled = Application.isPlaying;
             if (GUILayout.Button(Styles.ClearTempContent))
             {
                 foreach (var saveFile in saveFiles)
-                {
                     saveFile.ClearTempSave();
-                }
             }
             GUI.enabled = true;
         }
@@ -56,16 +57,23 @@ namespace WolverineSoft.SaveSystem.Editor
         {
             GUILayout.Space(10);
             EditorGUILayout.LabelField("Save File Tools");
-            
-            // Clear all Button
+
+            // Open folder button
+            if (GUILayout.Button(Styles.OpenFolderContent))
+            {
+                string filePath = SaveSystemIO.BasePath + "/";
+                EditorUtility.RevealInFinder(filePath);
+            }
+
+            // Clear all
             GUI.enabled = showall;
             if (GUILayout.Button(Styles.ClearAllContent))
             {
                 saveFile.ClearSave(showLogs);
             }
             GUI.enabled = true;
-            
-            //  temp button
+
+            // Clear temp
             GUI.enabled = Application.isPlaying;
             if (GUILayout.Button(Styles.ClearTempContent))
             {
@@ -75,5 +83,3 @@ namespace WolverineSoft.SaveSystem.Editor
         }
     }
 }
-
-

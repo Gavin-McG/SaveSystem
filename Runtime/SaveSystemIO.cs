@@ -7,7 +7,7 @@ namespace WolverineSoft.SaveSystem
     /// </summary>
     public static class SaveSystemIO
     {
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL && !UNITY_EDITOR
             private static ISaveSystemIO _impl = new PlayerPrefsIO();
         #else
             private static ISaveSystemIO _impl = new FileSystemIO();
