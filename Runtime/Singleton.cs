@@ -30,8 +30,6 @@ namespace WolverineSoft.SaveSystem
                     {
                         case 0:
                             //No Instance currently exists - returning null
-                            Debug.LogError("[Singleton] A Primary instance of " + typeof(T) +
-                                           " is needed in the scene");
                             _instance = null;
                             break;
                         case 1:
