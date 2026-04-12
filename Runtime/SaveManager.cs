@@ -221,6 +221,19 @@ namespace WolverineSoft.SaveSystem
             
             return true;
         }
+        
+        /// <summary>
+        /// Adds/changes a single Entry to the save data
+        /// </summary>
+        /// <remarks>
+        /// Will force a load if the data is not already loaded
+        /// </remarks>
+        public void AddSaveEntry<T>(string identifier, T data) {
+            //load data if necessary
+            if (!_loaded) LoadData(restore: false);
+            
+            _data[identifier] = data;
+        }
 
         /// <summary>
         /// Get the data for a particular identifier. Returns false if no data exists or is of incorrect type
