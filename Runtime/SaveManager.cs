@@ -244,7 +244,7 @@ namespace WolverineSoft.SaveSystem
             if (!_loaded) LoadData(restore: false);
 
             //check that key exists
-            if (!_data.ContainsValue(identifier))
+            if (!_data.TryGetValue(identifier, out object dataObject))
             {
                 if (settings.showWarnings)
                     Debug.LogWarning($"No save data found for identifier {identifier}");
@@ -254,7 +254,6 @@ namespace WolverineSoft.SaveSystem
             }
 
             //check that data is correct type
-            var dataObject = _data[identifier];
             if (dataObject is T tData)
             {
                 data = tData;
